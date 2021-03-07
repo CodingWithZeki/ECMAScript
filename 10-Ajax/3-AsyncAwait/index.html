@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const getIDs = new Promise((resolve,reject) => {
+        setTimeout(() => {
+            /*reject ile de göster*/
+            resolve([523,883,432,974]);
+        },1500);
+    });
+
+    /*ikinci aşamadaki kodlar*/
+    const getRecipe = recID => {
+        return new Promise((resolve, reject) => {
+            setTimeout(ID => {
+                const recipe = {title: 'Fresh tomato pasta', publisher: 'Jonas'};
+                resolve(`${ID}: ${recipe.title}`);
+            },1500,recID);
+        });
+    };
+    /*end ikinci aşamadaki kodlar*/
+
+    /*üçüncü aşama*/
+    const getRelated = publisher => {
+        return new Promise((resolve,reject) => {
+            setTimeout(pub => {
+                const recipe = {title:'Italian Pizza',publisher:'Jonas'};
+                resolve(`${pub}: ${recipe.title}`);
+            },1500,publisher);
+        })
+    };
+    /*end ücüncü aşama*/
+    /*getIDs
+        .then(IDs => {
+            console.log(IDs);
+            return getRecipe(IDs[2]); //ikinci aşama sonrası
+        })
+        .then(recipe => { //ikinci aşama sonrası
+            console.log(recipe);
+            return getRelated('Jonas'); //ucuncu aşama
+        })
+        .then(recipe => { //ücüncü
+            console.log(recipe); // ucuncu
+        })
+        .catch(error => {
+            console.log('Error!!');
+        });*/
+
+    async function getRecipesAW(){
+        const IDs = await getIDs;
+        console.log(IDs);
+        const recipe = await getRecipe(IDs[2]);
+        console.log(recipe);
+        const related = await getRelated('Jonas');
+        console.log(related);
+
+        return recipe;
+    }
+    /*bir onceki gösterim*/
+    /*const rec = getRecipesAW();
+    console.log(rec);
+    */
+    getRecipesAW().then(result => console.log(`${result} is the best ever!`));
+
+</script>
+</body>
+</html>
